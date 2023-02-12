@@ -1,9 +1,15 @@
+<script lang="ts">
+export default {
+    name: 'DyText'
+}
+</script>
 <script setup lang="ts">
 const props = defineProps(['opt', 'mode'])
 
-defineOptions({
-    name: 'DyText'
-})
+//定义组件名称
+//defineOptions({
+//    name: 'DyText'
+//})
 </script>
 
 <template>

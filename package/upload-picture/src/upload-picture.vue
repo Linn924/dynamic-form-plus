@@ -1,3 +1,8 @@
+<script lang="ts">
+export default {
+    name: 'DyUploadPicture'
+}
+</script>
 <script setup lang="ts">
 import { ref, computed, inject } from 'vue'
 import DyUpload from '@/upload'
@@ -72,9 +77,9 @@ const fileList = computed(() => {
 })
 
 //定义组件名称
-defineOptions({
-    name: 'DyUploadPicture'
-})
+//defineOptions({
+//    name: 'DyUploadPicture'
+//})
 </script>
 
 <template>

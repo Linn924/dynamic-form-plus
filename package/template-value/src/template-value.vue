@@ -1,3 +1,8 @@
+<script lang="ts">
+export default {
+    name: 'DyTemplateValue'
+}
+</script>
 <script setup lang="ts">
 import { computed, watch, inject } from 'vue'
 import type { IProvideForm } from '@/form'
@@ -31,9 +36,9 @@ watch(templateValue, val => {
 })
 
 //定义组件名称
-defineOptions({
-    name: 'DyTemplateValue'
-})
+//defineOptions({
+//    name: 'DyTemplateValue'
+//})
 </script>
 
 <template>

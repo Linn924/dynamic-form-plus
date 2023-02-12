@@ -1,3 +1,8 @@
+<script lang="ts">
+export default {
+    name: 'DySelect'
+}
+</script>
 <script setup lang="ts">
 import { ref, computed, inject, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import axios from 'axios'
@@ -138,9 +143,9 @@ onBeforeUnmount(() => {
 })
 
 //定义组件名称
-defineOptions({
-    name: 'DySelect'
-})
+//defineOptions({
+//    name: 'DySelect'
+//})
 </script>
 
 <template>

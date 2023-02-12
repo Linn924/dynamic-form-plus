@@ -1,3 +1,8 @@
+<script lang="ts">
+export default {
+    name: 'DySelectMultiple'
+}
+</script>
 <script setup lang="ts">
 import { ref, computed, inject, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import axios from 'axios'
@@ -147,9 +152,10 @@ onBeforeUnmount(() => {
     emits('value-change', props.opt.zmbm, '')
 })
 
-defineOptions({
-    name: 'DySelectMultiple'
-})
+//定义组件名称
+//defineOptions({
+//    name: 'DySelectMultiple'
+//})
 </script>
 
 <template>

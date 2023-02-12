@@ -1,3 +1,8 @@
+<script lang="ts">
+export default {
+    name: 'DyCascader'
+}
+</script>
 <script setup lang="ts">
 import { ref, computed, inject, onBeforeUnmount, getCurrentInstance } from 'vue'
 import city from './cascader.json'
@@ -241,9 +246,9 @@ defineExpose({
 })
 
 //定义组件名称
-defineOptions({
-    name: 'DyCascader'
-})
+//defineOptions({
+//    name: 'DyCascader'
+//})
 </script>
 
 <template>

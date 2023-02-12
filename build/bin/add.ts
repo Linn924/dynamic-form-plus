@@ -32,16 +32,25 @@ ${CompName}.install = (app: App): void => {
     app.component(${CompName}.name, ${CompName})
 }
 
+export * from './types'
+
 export default ${CompName}
         `
+    },
+    //创建组件类型
+    {
+        filename: 'types.ts',
+        content: `export {}`
     },
     //创建组件
     {
         filename: `src/${compName}.vue`,
-        content: `<script setup lang="ts">
-defineOptions({
+        content: `<script lang="ts">
+export default {
     name: 'Dy${uppercamelcase(compName)}'
-})
+}
+</script>
+<script setup lang="ts">
 </script>
 
 <template>
@@ -54,11 +63,7 @@ defineOptions({
 fsExtra.writeFile(listPath, JSON.stringify(comps, null, '\0'), err => {}) //添加新组件到组件清单
 files.forEach(file => {
     //创建 package
-    fsExtra.outputFile(
-        path.join(compPath, file.filename),
-        file.content,
-        err => {}
-    )
+    fsExtra.outputFile(path.join(compPath, file.filename), file.content, err => {})
 })
 
 console.log('[build add] DONE!')

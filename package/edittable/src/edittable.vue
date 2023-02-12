@@ -1,3 +1,8 @@
+<script lang="ts">
+export default {
+    name: 'DyEdittable'
+}
+</script>
 <script setup lang="ts">
 import { ref, computed, watch, inject } from 'vue'
 import { ElMessage, FormInstance, FormRules } from 'element-plus'
@@ -201,9 +206,9 @@ defineExpose({
 })
 
 //定义组件名称
-defineOptions({
-    name: 'DyEdittable'
-})
+//defineOptions({
+//    name: 'DyEdittable'
+//})
 </script>
 
 <template>

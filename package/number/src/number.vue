@@ -1,3 +1,8 @@
+<script lang="ts">
+export default {
+    name: 'DyNumber'
+}
+</script>
 <script setup lang="ts">
 import { computed, onMounted, onBeforeUnmount } from 'vue'
 import { validator } from '~/wiv'
@@ -84,9 +89,9 @@ onBeforeUnmount(() => {
 })
 
 //定义组件名称
-defineOptions({
-    name: 'DyNumber'
-})
+//defineOptions({
+//    name: 'DyNumber'
+//})
 </script>
 
 <template>

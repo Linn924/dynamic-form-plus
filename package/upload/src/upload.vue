@@ -1,5 +1,10 @@
+<script lang="ts">
+export default {
+    name: 'DyUpload'
+}
+</script>
 <script setup lang="ts">
-import { ref, inject, computed, watch, onMounted } from 'vue'
+import { ref, inject, computed, onMounted } from 'vue'
 import { ElMessage, UploadInstance } from 'element-plus'
 import { typeSet } from '~/tools'
 import type { IProvideForm, IDynamicPlus } from '@/form'
@@ -136,14 +141,6 @@ const acceptUploadFileType = computed(() => {
     }
 })
 
-watch(
-    fileList,
-    val => {
-        console.log(val)
-    },
-    { deep: true }
-)
-
 //生命周期：组件挂载
 onMounted(() => {
     headers.value = ($DyFormPlus?.getUploadHeaders && $DyFormPlus.getUploadHeaders()) || {}
@@ -165,9 +162,9 @@ defineExpose({
 })
 
 //定义组件名称
-defineOptions({
-    name: 'DyUpload'
-})
+//defineOptions({
+//    name: 'DyUpload'
+//})
 </script>
 
 <template>

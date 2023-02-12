@@ -1,3 +1,8 @@
+<script lang="ts">
+export default {
+    name: 'DyForm'
+}
+</script>
 <script setup lang="ts">
 import { ref, computed, provide, inject, nextTick } from 'vue'
 import axios from 'axios'
@@ -304,9 +309,9 @@ provide(
     })
 )
 //定义组件名称
-defineOptions({
-    name: 'DyForm'
-})
+//defineOptions({
+//    name: 'DyForm'
+//})
 //暴露变量及方法
 defineExpose({
     reset,

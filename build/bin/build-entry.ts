@@ -12,6 +12,7 @@ const createEntryTemplate = (arg: IArgs) => {
     return `import { App } from 'vue'
 import config from '../package.json'
 import utils from '../utils'
+import '../theme/index.less'
 import { Anchor } from 'ant-design-vue' //按需导入 ant-design 中的组件
 ${arg.include}
 
@@ -59,10 +60,7 @@ const fRenderEntry = (comps: any) => {
         include: includeTemplate.join('\r\n'),
         list: listTemplate.join(',\r\n')
     })
-    fsExtra.writeFileSync(
-        path.resolve(process.cwd(), `./package/index.ts`),
-        template
-    )
+    fsExtra.writeFileSync(path.resolve(process.cwd(), `./package/index.ts`), template)
 }
 
 const listPath = path.resolve(process.cwd(), './package/list.json') //组件清单路径

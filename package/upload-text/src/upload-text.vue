@@ -1,3 +1,8 @@
+<script lang="ts">
+export default {
+    name: 'DyUploadText'
+}
+</script>
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import DyUpload from '@/upload'
@@ -36,9 +41,9 @@ const isCompDisabled = computed(() => {
 })
 
 //定义组件名称
-defineOptions({
-    name: 'DyUploadText'
-})
+//defineOptions({
+//    name: 'DyUploadText'
+//})
 </script>
 
 <template>

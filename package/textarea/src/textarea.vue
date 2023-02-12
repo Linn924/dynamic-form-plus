@@ -1,3 +1,8 @@
+<script lang="ts">
+export default {
+    name: 'DyTextarea'
+}
+</script>
 <script setup lang="ts">
 import { computed, onMounted, onBeforeUnmount } from 'vue'
 
@@ -49,10 +54,10 @@ onBeforeUnmount(() => {
     emits('value-change', props.opt.zmbm, '')
 })
 
-//定义组件name
-defineOptions({
-    name: 'DyTextarea'
-})
+//定义组件名称
+//defineOptions({
+//    name: 'DyTextarea'
+//})
 </script>
 
 <template>

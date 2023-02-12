@@ -1,6 +1,7 @@
 import { App } from 'vue'
 import config from '../package.json'
 import utils from '../utils'
+import '../theme/index.less'
 import { Anchor } from 'ant-design-vue' //按需导入 ant-design 中的组件
 import Button from './button'
 import Form from './form'
@@ -48,11 +49,11 @@ const install = (app: App, opts: any = {}): void => {
     })
     app.use(Anchor)
     app.provide('$DyFormPlus', {
-        formOptsUrl: opts.formOptsUrl || '',// 表单配置请求地址
-        uploadUrl: opts.uploadUrl || '',// 文件上传地址
-        previewUrl: opts.previewUrl || '',// 文件预览地址
+        formOptsUrl: opts.formOptsUrl || '', // 表单配置请求地址
+        uploadUrl: opts.uploadUrl || '', // 文件上传地址
+        previewUrl: opts.previewUrl || '', // 文件预览地址
         dictUrl: opts.dictUrl || '', //字典list地址
-        getUploadHeaders: opts.getUploadHeaders,//获取项目中的自定义 headers
+        getUploadHeaders: opts.getUploadHeaders, //获取项目中的自定义 headers
         handleUploadResult: opts.handleUploadResult, //上传接口返回数据的处理方法
         ...utils // 动态表单提供的方法
     })
@@ -67,4 +68,4 @@ export default {
     version: config.version,
     install
 }
- 
+

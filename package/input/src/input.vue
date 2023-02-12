@@ -1,3 +1,8 @@
+<script lang="ts">
+export default {
+    name: 'DyInput'
+}
+</script>
 <script setup lang="ts">
 import { ref, inject, computed, watch, onMounted, onBeforeUnmount, getCurrentInstance } from 'vue'
 import axios from 'axios'
@@ -139,10 +144,10 @@ onBeforeUnmount(() => {
     emits('value-change', props.opt.zmbm, '')
 })
 
-//定义组件name
-defineOptions({
-    name: 'DyInput'
-})
+//定义组件名称
+//defineOptions({
+//    name: 'DyInput'
+//})
 </script>
 
 <template>

@@ -1,3 +1,8 @@
+<script lang="ts">
+export default {
+    name: 'DyRadio'
+}
+</script>
 <script setup lang="ts">
 import { ref, computed, inject, onMounted, onBeforeUnmount } from 'vue'
 import store from '~/store'
@@ -71,9 +76,9 @@ onBeforeUnmount(() => {
 })
 
 //定义组件名称
-defineOptions({
-    name: 'DyRadio'
-})
+//defineOptions({
+//    name: 'DyRadio'
+//})
 </script>
 
 <template>

@@ -1,3 +1,8 @@
+<script lang="ts">
+export default {
+    name: 'DyButton'
+}
+</script>
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { IBtn, TBtns } from '@/button'
@@ -25,9 +30,9 @@ const isCompDisabled = computed(() => {
 const btns = computed<TBtns>(() => props.opt.designer_buttons || [])
 
 //定义组件名称
-defineOptions({
-    name: 'DyButton'
-})
+//defineOptions({
+//    name: 'DyButton'
+//})
 </script>
 
 <template>

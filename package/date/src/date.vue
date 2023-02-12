@@ -1,3 +1,8 @@
+<script lang="ts">
+export default {
+    name: 'DyDate'
+}
+</script>
 <script setup lang="ts">
 import { computed, inject, onMounted, onBeforeUnmount } from 'vue'
 import { date2Str, dateAdd } from '~/wiv'
@@ -136,9 +141,9 @@ onBeforeUnmount(() => {
 })
 
 //定义组件名称
-defineOptions({
-    name: 'DyDate'
-})
+//defineOptions({
+//    name: 'DyDate'
+//})
 </script>
 
 <template>

@@ -1,3 +1,8 @@
+<script lang="ts">
+export default {
+    name: 'DyEditcard'
+}
+</script>
 <script setup lang="ts">
 import { ref, computed, watch, inject, onMounted } from 'vue'
 import { DyFormItem } from '@/form'
@@ -187,9 +192,9 @@ defineExpose({
 })
 
 //定义组件名称
-defineOptions({
-    name: 'DyEditcard'
-})
+//defineOptions({
+//    name: 'DyEditcard'
+//})
 </script>
 
 <template>
