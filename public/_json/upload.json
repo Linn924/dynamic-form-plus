@@ -1,0 +1,11 @@
+{
+    "success": true,
+    "code": 200,
+    "msg": "success",
+    "data": [
+        {
+            "id": "1ce9cdd586f146b6872787911a946c73",
+            "name": "avatar.jpeg"
+        }
+    ]
+}

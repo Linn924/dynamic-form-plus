@@ -1,0 +1,20 @@
+{
+"button": "package/button",
+"form": "package/form",
+"input": "package/input",
+"text": "package/text",
+"textarea": "package/textarea",
+"cascader": "package/cascader",
+"checkbox": "package/checkbox",
+"date": "package/date",
+"editcard": "package/editcard",
+"edittable": "package/edittable",
+"number": "package/number",
+"radio": "package/radio",
+"select": "package/select",
+"select-multiple": "package/select-multiple",
+"template-value": "package/template-value",
+"upload": "package/upload",
+"upload-picture": "package/upload-picture",
+"upload-text": "package/upload-text"
+}
