@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, inject, computed, watch, onMounted, onBeforeUnmount, getCurrentInstance } from 'vue'
 import axios from 'axios'
-import InputSuggest from './input-suggest.vue'
+import { InputSuggest } from '@/input'
 import type { IProvideForm } from '@/form'
 
 const dyInputInstance = getCurrentInstance() //当前input实例组件
@@ -14,19 +14,6 @@ let keyword = '' //最新搜索的关键词
 const autocompleteRef = ref() //el-autocomplete组件
 const isMobileFocus = ref(false) //移动端模式 是否聚焦到下拉框
 const dictList: any = ref([]) //类似于下拉字典数据
-
-//计算属性：当前控件是否被禁用
-const isCompDisabled = computed(() => {
-    return typeof props.sfzd === 'boolean'
-        ? props.sfzd
-        : props.opt.sfzd === '1' || props.mode !== 'edit'
-})
-//计算属性：autocomplete组件中的suggestionVisible
-const suggestionVisible = computed(() => {
-    const comp = autocompleteRef.value
-    const isValidData = comp.suggestions.length > 0
-    return (isValidData || comp.loading) && comp.activated
-})
 
 //事件：input事件
 const handleInput = (value: string | number) => {
@@ -100,6 +87,19 @@ const getDictList = (value: string, callback: any) => {
 const valueChange = ({ value }: { value: string | number }) => {
     handleSelect({ value })
 }
+
+//计算属性：当前控件是否被禁用
+const isCompDisabled = computed(() => {
+    return typeof props.sfzd === 'boolean'
+        ? props.sfzd
+        : props.opt.sfzd === '1' || props.mode !== 'edit'
+})
+//计算属性：autocomplete组件中的suggestionVisible
+const suggestionVisible = computed(() => {
+    const comp = autocompleteRef.value
+    const isValidData = comp.suggestions.length > 0
+    return (isValidData || comp.loading) && comp.activated
+})
 
 //生命周期：组件挂载完成
 onMounted(() => {

@@ -5,7 +5,7 @@ const store = {
         dictList: {} //存储的字典数据
     },
     has(key: string) {
-        return this.state.dictCode.indexOf(key) > -1
+        return this.state.dictCode.indexOf(key as never) > -1
     },
     get(key: string) {
         return this.state.dictList[key]
@@ -21,28 +21,20 @@ const store = {
                 responseType: 'json'
             })
                 .then(({ data: res }) => {
-                    this.state.dictList = Object.assign(
-                        {},
-                        this.state.dictList,
-                        {
-                            [key]: res.data || []
-                        }
-                    )
+                    this.state.dictList = Object.assign({}, this.state.dictList, {
+                        [key]: res.data || []
+                    })
                 })
                 .catch(error => {
-                    this.state.dictList = Object.assign(
-                        {},
-                        this.state.dictList,
-                        {
-                            [key]: []
-                        }
-                    )
+                    this.state.dictList = Object.assign({}, this.state.dictList, {
+                        [key]: []
+                    })
                 })
         }
         if (!this.has(key)) {
             getDictList()
         }
-        this.state.dictCode.push(key)
+        this.state.dictCode.push(key as never)
     }
 }
 

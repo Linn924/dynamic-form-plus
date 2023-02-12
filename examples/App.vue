@@ -50,13 +50,13 @@ const beforeApplyOpts = (opts: any, callback: any) => {
                 ]
             }
         },
-        {
-            zmbm: 's1',
-            opt: {
-                filterable: '1',
-                optionUrl: '../public/_json/dictList.json'
-            }
-        },
+        //{
+        //    zmbm: 's1',
+        //    opt: {
+        //        filterable: '1',
+        //        optionUrl: '../public/_json/dictList.json'
+        //    }
+        //},
         {
             zmbm: 'dx',
             opt: {

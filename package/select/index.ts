@@ -1,4 +1,5 @@
 import Select from './src/select.vue'
+import SelectSuggest from './src/select-suggest.vue'
 import { App } from 'vue'
 
 Select.install = (app: App): void => {
@@ -7,4 +8,7 @@ Select.install = (app: App): void => {
 
 export * from './types'
 
+export { SelectSuggest }
+
 export default Select
+

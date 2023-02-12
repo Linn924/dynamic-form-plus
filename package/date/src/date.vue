@@ -7,18 +7,6 @@ const form = inject<IProvideForm>('form')
 const props = defineProps(['mode', 'opt', 'value', 'sfzd'])
 const emits = defineEmits(['value-change', 'event-emit'])
 
-//事件：change事件TODO(未触发change事件)
-const handleChange = (value: Date | string) => {
-    emits('value-change', props.opt.zmbm, value)
-    setTimeout(() => {
-        //保证页面捕获到 change 事件后，执行操作时，可以在页面绑定在表单的数据上获取修改后的值。
-        emits('event-emit', {
-            opt: props.opt,
-            value,
-            type: 'change'
-        })
-    }, 0)
-}
 //方法：日期处理
 const formatDate = (date: Date, format: string) => {
     date.setHours(0)
@@ -27,6 +15,23 @@ const formatDate = (date: Date, format: string) => {
     return date2Str(date, format)
 }
 
+//组件绑定值
+const formValue = computed({
+    get() {
+        return props.value
+    },
+    set(value) {
+        emits('value-change', props.opt.zmbm, value)
+        setTimeout(() => {
+            //保证页面捕获到 change 事件后，执行操作时，可以在页面绑定在表单的数据上获取修改后的值。
+            emits('event-emit', {
+                opt: props.opt,
+                value,
+                type: 'change'
+            })
+        }, 0)
+    }
+})
 //计算属性：组件是否禁用
 const isCompDisabled = computed(() =>
     typeof props.sfzd === 'boolean' ? props.sfzd : props.opt.sfzd === '1' || props.mode !== 'edit'
@@ -140,27 +145,25 @@ defineOptions({
     <el-date-picker
         class="dyform-date"
         v-if="isDatePicker"
+        v-model="formValue"
         clearable
         :type="type"
-        :modelValue="props.value"
         :editable="form?.scene !== 'mobile'"
         :format="props.opt.ysj_gs || 'YYYY-MM-DD'"
         :value-format="props.opt.ysj_gs || 'YYYY-MM-DD'"
         :placeholder="props.opt.placeholder"
         :disabled="isCompDisabled"
-        @change="handleChange"
     ></el-date-picker>
     <el-time-picker
         class="dyform-date"
         v-else
         clearable
-        :modelValue="props.value"
+        v-model="formValue"
         :editable="form?.scene !== 'mobile'"
         :format="props.opt.ysj_gs || 'YYYY-MM-DD'"
         :value-format="props.opt.ysj_gs || 'YYYY-MM-DD'"
         :placeholder="props.opt.placeholder"
         :disabled="isCompDisabled"
-        @change="handleChange"
     ></el-time-picker>
 </template>
 

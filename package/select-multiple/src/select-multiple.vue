@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref, computed, inject, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import axios from 'axios'
-import SelectMultipleSuggest from './select-multiple-suggest.vue'
-import store from '../../../utils/store'
-import { dealDictList } from '../../../utils/tools'
+import { SelectMultipleSuggest } from '@/select-multiple'
+import store from '~/store'
+import { dealDictList } from '~/tools'
 import type { IProvideForm } from '@/form'
 
-const form: any = inject('form')
+const form = inject<IProvideForm>('form')
 const props = defineProps(['mode', 'opt', 'value', 'sfzd'])
 const emits = defineEmits(['value-change', 'event-emit'])
 
@@ -18,48 +18,6 @@ const dictListBySearch = ref('') //远程搜索的数据
 const isMobileFocus = ref(false) //移动端模式 是否聚焦到下拉框
 const isLoading = ref(false) //远程搜索加载
 
-//计算属性：当前控件是否被禁用
-const isCompDisabled = computed(() => {
-    return typeof props.sfzd === 'boolean'
-        ? props.sfzd
-        : props.opt.sfzd === '1' || props.mode !== 'edit'
-})
-//计算属性：mcbm
-const defaultMcbm = computed(() =>
-    props.opt.mcbm && form.value.value[props.opt.mcbm]
-        ? form.value.value[props.opt.mcbm].split(props.opt.ysj_extra || ';')
-        : []
-)
-//计算属性：默认选中值
-const defaultValue = computed(() =>
-    props.value ? props.value.split(props.opt.ysj_extra || ';') : []
-)
-//计算属性：默认选中列表
-const defaultList = computed(() => {
-    return defaultValue.value.map((value: any, index: number) => ({
-        name: defaultMcbm.value[index],
-        value
-    }))
-})
-//计算属性：仅在初始渲染时使用默认选中值
-const dictListBySearchComputed = computed(() => {
-    /**
-     * 注意：远程搜索的条件下，只有初始渲染的时候才会使用默认选中值（这样value才能匹配列表的项）
-     * 渲染完成之后，修改value值，列表中没有value匹配的项 TODO
-     */
-    return dictListBySearch.value ? dictListBySearch.value : defaultList.value
-})
-//计算属性：字典数据
-const dictList = computed(() => {
-    const dictList =
-        dealDictList(props.opt.ysj_zdlist) ||
-        state.value.dictList[props.opt.designer_dictCode] ||
-        []
-    return props.opt.filterable === '1' && props.opt.optionUrl
-        ? dictListBySearchComputed.value
-        : dictList
-})
-
 //事件：change事件
 const handleChange = (value: number[] | string[]) => {
     valueChange(value)
@@ -67,7 +25,7 @@ const handleChange = (value: number[] | string[]) => {
 //事件：focus事件
 const handleFocus = () => {
     if (props.opt.filterable === '1') {
-        isMobileFocus.value = form.value.scene === 'mobile'
+        isMobileFocus.value = form?.value.scene === 'mobile'
         props.opt.optionUrl && getDictList()
     }
     nextTick(() => {
@@ -124,6 +82,48 @@ const valueChange = (arr: any) => {
     }, 0)
 }
 
+//计算属性：当前控件是否被禁用
+const isCompDisabled = computed(() => {
+    return typeof props.sfzd === 'boolean'
+        ? props.sfzd
+        : props.opt.sfzd === '1' || props.mode !== 'edit'
+})
+//计算属性：mcbm
+const defaultMcbm = computed(() =>
+    props.opt.mcbm && form?.value.value[props.opt.mcbm]
+        ? form.value.value[props.opt.mcbm].split(props.opt.ysj_extra || ';')
+        : []
+)
+//计算属性：默认选中值
+const defaultValue = computed(() =>
+    props.value ? props.value.split(props.opt.ysj_extra || ';') : []
+)
+//计算属性：默认选中列表
+const defaultList = computed(() => {
+    return defaultValue.value.map((value: any, index: number) => ({
+        name: defaultMcbm.value[index],
+        value
+    }))
+})
+//计算属性：仅在初始渲染时使用默认选中值
+const dictListBySearchComputed = computed(() => {
+    /**
+     * 注意：远程搜索的条件下，只有初始渲染的时候才会使用默认选中值（这样value才能匹配列表的项）
+     * 渲染完成之后，修改value值，列表中没有value匹配的项 TODO
+     */
+    return dictListBySearch.value ? dictListBySearch.value : defaultList.value
+})
+//计算属性：字典数据
+const dictList = computed(() => {
+    const dictList =
+        dealDictList(props.opt.ysj_zdlist) ||
+        state.value.dictList[props.opt.designer_dictCode] ||
+        []
+    return props.opt.filterable === '1' && props.opt.optionUrl
+        ? dictListBySearchComputed.value
+        : dictList
+})
+
 //生命周期：组件挂载
 onMounted(() => {
     /**
@@ -133,7 +133,7 @@ onMounted(() => {
      * 场景三：已发起请求，还未获取数据 => 待请求成功后获取数据
      */
     if (props.opt.designer_dictCode) {
-        store.set(props.opt.designer_dictCode, form.value.dictUrl)
+        store.set(props.opt.designer_dictCode, form?.value.dictUrl)
     }
     //挂载时处理选项默认值
     setTimeout(() => {

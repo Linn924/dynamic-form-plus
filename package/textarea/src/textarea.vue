@@ -4,6 +4,28 @@ import { computed, onMounted, onBeforeUnmount } from 'vue'
 const props = defineProps(['mode', 'opt', 'value', 'sfzd'])
 const emits = defineEmits(['value-change', 'event-emit'])
 
+//事件：input事件
+const handleInput = (value: string) => {
+    emits('value-change', props.opt.zmbm, value)
+}
+//事件：change事件
+const handleChange = (value: string) => {
+    emits('event-emit', {
+        opt: props.opt,
+        value,
+        type: 'change'
+    })
+}
+//事件：click事件
+const handleClick = (event: MouseEvent, btn: any) => {
+    emits('event-emit', {
+        opt: props.opt,
+        event,
+        type: 'click',
+        id: btn.id
+    })
+}
+
 //计算属性：当前控件是否被禁用
 const isCompDisabled = computed(() => {
     return typeof props.sfzd === 'boolean'
@@ -11,18 +33,13 @@ const isCompDisabled = computed(() => {
         : props.opt.sfzd === '1' || props.mode !== 'edit'
 })
 //计算属性：文本域高度
-const compHeight = computed(() =>
-    props.opt.ysj_extra ? Number(props.opt.ysj_extra) : 2
-)
+const compHeight = computed(() => (props.opt.ysj_extra ? Number(props.opt.ysj_extra) : 2))
 
 //生命周期：组件挂载完成
 onMounted(() => {
     //挂载时处理选项默认值
     setTimeout(() => {
-        if (
-            props.value === '' &&
-            (props.opt.ysj_mrz === 0 || props.opt.ysj_mrz)
-        ) {
+        if (props.value === '' && (props.opt.ysj_mrz === 0 || props.opt.ysj_mrz)) {
             emits('value-change', props.opt.zmbm, props.opt.ysj_mrz)
         }
     }, 0)
@@ -31,28 +48,6 @@ onMounted(() => {
 onBeforeUnmount(() => {
     emits('value-change', props.opt.zmbm, '')
 })
-
-//事件：input事件
-const handleInput = (value: string | number) => {
-    emits('value-change', props.opt.zmbm, value)
-}
-//事件：change事件
-const handleChange = (value: string | number) => {
-    emits('event-emit', {
-        opt: props.opt,
-        value,
-        type: 'change'
-    })
-}
-//事件：click事件
-const handleClick = (event: any, data: any) => {
-    emits('event-emit', {
-        opt: props.opt,
-        event,
-        type: 'click',
-        id: data.id
-    })
-}
 
 //定义组件name
 defineOptions({
@@ -73,15 +68,15 @@ defineOptions({
             @change="handleChange"
         ></el-input>
         <el-button
-            v-for="item in props.opt._prj_button"
-            :key="item.id"
-            v-bind="{ disabled: isCompDisabled, ...item.el }"
-            @click="handleClick($event, item)"
+            v-for="btn in props.opt._prj_button"
+            :key="btn.id"
+            :class="{ _notext: !btn.text }"
+            v-bind="{ disabled: isCompDisabled, ...btn.el }"
+            @click="handleClick($event, btn)"
         >
-            <el-icon v-if="item.el.icon">
-                <component :is="item.el.icon"></component>
-            </el-icon>
-            <span v-if="item.text">{{ item.text }}</span>
+            <template #default>
+                {{ btn.text }}
+            </template>
         </el-button>
     </div>
 </template>

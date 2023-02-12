@@ -2,13 +2,14 @@
 import { ref, computed, inject } from 'vue'
 import DyUpload from '@/upload'
 import { typeSet } from '~/tools'
+import type { IDynamicPlus } from '@/form'
 
-const $DyFormPlus = inject<any>('$DyFormPlus') //注入动态表单提供的方法
+const $DyFormPlus = inject<IDynamicPlus>('$DyFormPlus') //注入动态表单提供的方法
 const props = defineProps(['mode', 'opt', 'value', 'sfzd'])
 const emits = defineEmits(['value-change', 'event-emit'])
 
 //变量
-const uploadRef = ref()
+const uploadRef = ref<any>()
 
 //事件：click事件
 const handleClick = (type: string, file: any) => {
@@ -101,7 +102,7 @@ defineOptions({
             <el-image
                 v-if="file._type === 'image'"
                 class="dyform-upload-icon"
-                :src="$DyFormPlus.previewUrl + file.id"
+                :src="$DyFormPlus?.previewUrl + file.id"
                 fit="contain"
             ></el-image>
             <el-icon v-else>

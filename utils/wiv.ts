@@ -40,9 +40,7 @@ const date2Str = function (oDate: any, sFormatStr: string) {
     )
     str = str.replace(
         /MM/,
-        oDate.getMonth() + 1 > 9
-            ? (oDate.getMonth() + 1).toString()
-            : '0' + (oDate.getMonth() + 1)
+        oDate.getMonth() + 1 > 9 ? (oDate.getMonth() + 1).toString() : '0' + (oDate.getMonth() + 1)
     )
     str = str.replace(/M/g, oDate.getMonth() + 1)
     str = str.replace(/w|W/g, Week[oDate.getDay()])
@@ -53,23 +51,17 @@ const date2Str = function (oDate: any, sFormatStr: string) {
     str = str.replace(/d|D/g, oDate.getDate())
     str = str.replace(
         /hh|HH/,
-        oDate.getHours() > 9
-            ? oDate.getHours().toString()
-            : '0' + oDate.getHours()
+        oDate.getHours() > 9 ? oDate.getHours().toString() : '0' + oDate.getHours()
     )
     str = str.replace(/h|H/g, oDate.getHours())
     str = str.replace(
         /mm/,
-        oDate.getMinutes() > 9
-            ? oDate.getMinutes().toString()
-            : '0' + oDate.getMinutes()
+        oDate.getMinutes() > 9 ? oDate.getMinutes().toString() : '0' + oDate.getMinutes()
     )
     str = str.replace(/m/g, oDate.getMinutes())
     str = str.replace(
         /ss|SS/,
-        oDate.getSeconds() > 9
-            ? oDate.getSeconds().toString()
-            : '0' + oDate.getSeconds()
+        oDate.getSeconds() > 9 ? oDate.getSeconds().toString() : '0' + oDate.getSeconds()
     )
     str = str.replace(/s|S/g, oDate.getSeconds())
     return str
@@ -103,24 +95,14 @@ const dateAdd = (oDate: any, sInterval: string, nStep: any) => {
         case 'Q':
         case 'q':
             return fChargeDate(
-                new Date(
-                    new Date(nOldTime).setMonth(oldDate.getMonth() + nStep * 3)
-                )
+                new Date(new Date(nOldTime).setMonth(oldDate.getMonth() + nStep * 3))
             )
         case 'M':
-            return fChargeDate(
-                new Date(
-                    new Date(nOldTime).setMonth(oldDate.getMonth() + nStep)
-                )
-            )
+            return fChargeDate(new Date(new Date(nOldTime).setMonth(oldDate.getMonth() + nStep)))
         case 'Y':
         case 'y':
             return fChargeDate(
-                new Date(
-                    new Date(nOldTime).setFullYear(
-                        oldDate.getFullYear() + nStep
-                    )
-                )
+                new Date(new Date(nOldTime).setFullYear(oldDate.getFullYear() + nStep))
             )
     }
 }
@@ -153,8 +135,7 @@ const validator = {
     //必须为数字，范围：{0}~{1}
     numberRange: (value: any, limit: any) => {
         if (Array.isArray(limit)) {
-            let val =
-                    typeof value === 'number' ? value.toString() : value || '',
+            let val = typeof value === 'number' ? value.toString() : value || '',
                 min = limit[0],
                 max = limit[1]
             if (val) {
@@ -192,8 +173,7 @@ const validator = {
     //必须填{0}个字
     length: (value: any, limit: any) => {
         if (typeof limit === 'number') {
-            const val =
-                typeof value === 'number' ? value.toString() : value || ''
+            const val = typeof value === 'number' ? value.toString() : value || ''
             return !val || val.length === limit
         }
         return true
@@ -201,8 +181,7 @@ const validator = {
     //限制{0}-{1}个字
     lengthRange: (value: any, limit: any) => {
         if (Array.isArray(limit)) {
-            const val =
-                    typeof value === 'number' ? value.toString() : value || '',
+            const val = typeof value === 'number' ? value.toString() : value || '',
                 length = val.length,
                 min = limit[0],
                 max = limit[1]
@@ -212,17 +191,11 @@ const validator = {
                     if (length > max) {
                         return false
                     }
-                } else if (
-                    typeof min !== 'undefined' &&
-                    typeof max === 'undefined'
-                ) {
+                } else if (typeof min !== 'undefined' && typeof max === 'undefined') {
                     if (length < min) {
                         return false
                     }
-                } else if (
-                    typeof min !== 'undefined' &&
-                    typeof max !== 'undefined'
-                ) {
+                } else if (typeof min !== 'undefined' && typeof max !== 'undefined') {
                     if (length < min || length > max) {
                         return false
                     }
@@ -234,8 +207,7 @@ const validator = {
     //必须填{0}个字符（中文计为2个字符）
     byteLength: (value: any, limit: any) => {
         if (typeof limit == 'number') {
-            const val =
-                typeof value === 'number' ? value.toString() : value || ''
+            const val = typeof value === 'number' ? value.toString() : value || ''
             return !val || getByteLength(val) === limit
         }
         return true
@@ -243,8 +215,7 @@ const validator = {
     //限制{0}-{1}个字符（中文计为2个字符）
     byteLengthRange: (value: any, limit: any) => {
         if (Array.isArray(limit)) {
-            const val =
-                    typeof value === 'number' ? value.toString() : value || '',
+            const val = typeof value === 'number' ? value.toString() : value || '',
                 length = getByteLength(val),
                 min = limit[0],
                 max = limit[1]
@@ -254,17 +225,11 @@ const validator = {
                     if (length > max) {
                         return false
                     }
-                } else if (
-                    typeof min !== 'undefined' &&
-                    typeof max === 'undefined'
-                ) {
+                } else if (typeof min !== 'undefined' && typeof max === 'undefined') {
                     if (length < min) {
                         return false
                     }
-                } else if (
-                    typeof min !== 'undefined' &&
-                    typeof max !== 'undefined'
-                ) {
+                } else if (typeof min !== 'undefined' && typeof max !== 'undefined') {
                     if (length < min || length > max) {
                         return false
                     }
@@ -281,11 +246,7 @@ const validator = {
 
         switch (limit) {
             case 'phone':
-                return (
-                    !val ||
-                    telRex.test(val) ||
-                    (val.length == 11 && mobileRex.test(val))
-                )
+                return !val || telRex.test(val) || (val.length == 11 && mobileRex.test(val))
             case 'mobile':
                 return !val || (val.length == 11 && mobileRex.test(val))
             case 'tel':
@@ -318,35 +279,15 @@ const validator = {
             const _cardNoVali = (idcard: any) => {
                 idcard = idcard.toString().toUpperCase() // 将末位的x装换成X
                 // 身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X
-                if (!/(^\d{15}$)|(^\d{17}([0-9]|X)$)/i.test(idcard))
-                    return false
-                const paritybit = [
-                    '1',
-                    '0',
-                    'X',
-                    '9',
-                    '8',
-                    '7',
-                    '6',
-                    '5',
-                    '4',
-                    '3',
-                    '2'
-                ] // 校验位取值
-                const power_list = [
-                    7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2
-                ] // 加权因子
+                if (!/(^\d{15}$)|(^\d{17}([0-9]|X)$)/i.test(idcard)) return false
+                const paritybit = ['1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2'] // 校验位取值
+                const power_list = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2] // 加权因子
 
                 const fifteenToEighteen = function (str: any) {
                     let s = 0
-                    let newid =
-                        str.substring(0, 6) +
-                        '19' +
-                        str.substring(6, str.length)
+                    let newid = str.substring(0, 6) + '19' + str.substring(6, str.length)
                     for (let i = 0; i < newid.length; i++) {
-                        s +=
-                            parseInt(newid.substring(i, i + 1), 10) *
-                            power_list[i]
+                        s += parseInt(newid.substring(i, i + 1), 10) * power_list[i]
                     }
                     return newid + paritybit[s % 11]
                 }
@@ -410,8 +351,7 @@ const validator = {
                     //var date = new Date(year,parseInt(month, 10)-1,day);// ie8 下 parseInt() 默认基数为8， 08,09 会变成 0
                     let date = new Date(birthday)
                     /**大于等于当前日期 或 小于1900年1月1日*/
-                    if (date >= new Date() || date <= new Date(1900, 0, 1))
-                        return false
+                    if (date >= new Date() || date <= new Date(1900, 0, 1)) return false
                     return date2Str(date, 'yyyy/MM/dd') === birthday
                 }
                 if (15 == idcard.length) {
@@ -427,8 +367,7 @@ const validator = {
             return !val || _cardNoVali(val)
         }
         if (limit) {
-            const val =
-                    typeof value === 'number' ? value.toString() : value || '',
+            const val = typeof value === 'number' ? value.toString() : value || '',
                 hkmoCode = /^[HMhm]{1}([0-9]{10}|[0-9]{8})$/, //港澳通行证
                 twCode1 = /^[0-9]{8}$/, //台湾通行证
                 twCode2 = /^[0-9]{10}$/
@@ -439,12 +378,7 @@ const validator = {
                 case 't': //台湾居民来往大陆通行证
                     return !val || twCode1.test(val) || twCode2.test(val)
                 case 'hmt': //合并 hm 和 tw
-                    return (
-                        !val ||
-                        hkmoCode.test(val) ||
-                        twCode1.test(val) ||
-                        twCode2.test(val)
-                    )
+                    return !val || hkmoCode.test(val) || twCode1.test(val) || twCode2.test(val)
                 case 'cn': //中国身份证（不含港澳台身份证及通行证）
                     return !val || isCardNo(val)
                 case 'cnhmt': //中国身份证（含港澳台身份证及通行证）
@@ -461,9 +395,7 @@ const validator = {
     },
     //统一社会信用代码
     tyshxy: (value: any) => {
-        const aWs = [
-                1, 3, 9, 27, 19, 26, 16, 17, 20, 29, 25, 13, 8, 24, 10, 30, 28
-            ], //机构代码
+        const aWs = [1, 3, 9, 27, 19, 26, 16, 17, 20, 29, 25, 13, 8, 24, 10, 30, 28], //机构代码
             sStr = '0123456789ABCDEFGHJKLMNPQRTUWXY',
             rRex = /^([0-9A-Z]){2}([0-9]){6}([0-9A-Z]){8}[0-9|X][0-9A-Z]$/
 
@@ -541,8 +473,7 @@ const validator = {
         if (!val) return true
         if (val.indexOf('-') < 0) {
             // 若不含 -，则在最后第二位添加
-            val =
-                val.substring(0, nLen - 1) + '-' + val.substring(nLen - 1, nLen)
+            val = val.substring(0, nLen - 1) + '-' + val.substring(nLen - 1, nLen)
             nLen++
         }
         if (nLen < 10) {
@@ -563,13 +494,7 @@ const validator = {
 
         nLen = val.length
         return (
-            !val ||
-            nLen == 7 ||
-            nLen == 9 ||
-            nLen == 15 ||
-            nLen == 16 ||
-            nLen == 18 ||
-            nLen == 20
+            !val || nLen == 7 || nLen == 9 || nLen == 15 || nLen == 16 || nLen == 18 || nLen == 20
         )
     }
 }
@@ -605,9 +530,7 @@ const getValidateRule = (
     const bValidate = sRule === 'required'
 
     const fValidate = (rule: any, value: any, callback: any) => {
-        return validator[sRule](value, limit)
-            ? callback()
-            : callback(new Error())
+        return validator[sRule](value, limit) ? callback() : callback(new Error())
     }
 
     const fMessage = (sMessage = '') => {
@@ -619,10 +542,7 @@ const getValidateRule = (
                 if (typeof nNum === 'undefined') {
                     nNum = '∞'
                 }
-                sMessage = sMessage.replace(
-                    new RegExp('\\{' + nIdx + '\\}', 'g'),
-                    nNum
-                )
+                sMessage = sMessage.replace(new RegExp('\\{' + nIdx + '\\}', 'g'), nNum)
             })
         }
         return sMessage

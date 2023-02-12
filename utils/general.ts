@@ -1,15 +1,7 @@
-import type {
-    TGroupData,
-    TFormData,
-    IExpendObj,
-    IExpendGruoupObj
-} from './types'
+import type { TGroupData, TFormData, IExpendObj, IExpendGruoupObj } from './types'
 
 // 处理表单项配置
-const resetOpts = (
-    aFormOpts: TFormData,
-    opts: IExpendObj | IExpendObj[]
-): TFormData => {
+const resetOpts = (aFormOpts: TFormData, opts: IExpendObj | IExpendObj[]): TFormData => {
     const aData = Array.isArray(opts) ? opts : [opts]
     const oMap = new Map()
     aData.forEach(oData => {
@@ -43,10 +35,7 @@ const resetOpts = (
 }
 
 // 处理tab、分组配置
-const resetGroupOpts = (
-    aGroupOpts: TGroupData,
-    opts: IExpendGruoupObj
-): TGroupData => {
+const resetGroupOpts = (aGroupOpts: TGroupData, opts: IExpendGruoupObj): TGroupData => {
     const aData = Array.isArray(opts) ? opts : [opts]
     const oTabMap = new Map()
     const oFzMap = new Map()

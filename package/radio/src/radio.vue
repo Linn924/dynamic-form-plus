@@ -1,28 +1,15 @@
 <script setup lang="ts">
 import { ref, computed, inject, onMounted, onBeforeUnmount } from 'vue'
-import store from '../../../utils/store'
-import { dealDictList } from '../../../utils/tools'
+import store from '~/store'
+import { dealDictList } from '~/tools'
 import type { IProvideForm } from '@/form'
 
-const form: any = inject('form')
+const form = inject<IProvideForm>('form')
 const props = defineProps(['mode', 'opt', 'value', 'sfzd'])
 const emits = defineEmits(['value-change', 'event-emit'])
 
 //变量
 const state = ref(store.state)
-
-//计算属性：组件是否禁用
-const isCompDisabled = computed(() =>
-    typeof props.sfzd === 'boolean' ? props.sfzd : props.opt.sfzd === '1' || props.mode !== 'edit'
-)
-//计算属性：字典数据
-const dictList: any = computed(() => {
-    return (
-        dealDictList(props.opt.ysj_zdlist) ||
-        state.value.dictList[props.opt.designer_dictCode] ||
-        []
-    )
-})
 
 //事件：change事件
 const handleChange = (value: number | string) => {
@@ -47,6 +34,19 @@ const handleChange = (value: number | string) => {
     }, 0)
 }
 
+//计算属性：组件是否禁用
+const isCompDisabled = computed(() =>
+    typeof props.sfzd === 'boolean' ? props.sfzd : props.opt.sfzd === '1' || props.mode !== 'edit'
+)
+//计算属性：字典数据
+const dictList: any = computed(() => {
+    return (
+        dealDictList(props.opt.ysj_zdlist) ||
+        state.value.dictList[props.opt.designer_dictCode] ||
+        []
+    )
+})
+
 //生命周期：组件挂载
 onMounted(() => {
     /**
@@ -56,7 +56,7 @@ onMounted(() => {
      * 场景三：已发起请求，还未获取数据 => 待请求成功后获取数据
      */
     if (props.opt.designer_dictCode) {
-        store.set(props.opt.designer_dictCode, form.value.dictUrl)
+        store.set(props.opt.designer_dictCode, form?.value.dictUrl)
     }
     //挂载时处理选项默认值
     setTimeout(() => {

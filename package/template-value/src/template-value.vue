@@ -2,7 +2,7 @@
 import { computed, watch, inject } from 'vue'
 import type { IProvideForm } from '@/form'
 
-const form: any = inject('form')
+const form = inject<IProvideForm>('form')
 const props = defineProps(['item', 'opt'])
 const emits = defineEmits(['value-change'])
 
@@ -18,7 +18,7 @@ const templateValue = computed(() => {
                 arr[0],
                 arr[1].indexOf('item') > -1
                     ? props.item[arr[1].split('.')[1]]
-                    : form.value.value[arr[1]]
+                    : form?.value.value[arr[1]]
             )
         }
     }

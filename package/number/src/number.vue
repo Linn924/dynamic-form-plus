@@ -1,20 +1,9 @@
 <script setup lang="ts">
 import { computed, onMounted, onBeforeUnmount } from 'vue'
-import { validator } from '../../../utils/wiv'
+import { validator } from '~/wiv'
 
 const props = defineProps(['mode', 'opt', 'value', 'sfzd'])
 const emits = defineEmits(['value-change', 'event-emit'])
-
-//计算属性：组件是否禁用
-const isCompDisabled = computed(() =>
-    typeof props.sfzd === 'boolean'
-        ? props.sfzd
-        : props.opt.sfzd === '1' || props.mode !== 'edit'
-)
-//计算属性：绑定值的处理
-const modifiedValue = computed(() =>
-    props.value === 0 ? '0' : (props.value || '').toString().trim()
-)
 
 //事件：input事件
 const handleInput = (value: number | string) => {
@@ -39,22 +28,18 @@ const blurCallback = () => {
     let reg
     let arr = []
 
-    if (modifiedValue.value === '' || !isNumber(modifiedValue.value)) {
+    if (formValue.value === '' || !isNumber(formValue.value)) {
         emits('value-change', props.opt.zmbm, '')
         return
     }
     if (props.opt.ysj_extra) {
         bit = Number(props.opt.ysj_extra)
         reg = new RegExp(`^(([1-9]{1}\\d*)|(0{1}))(\\.\\d{${bit}})$`)
-        if (!reg.test(modifiedValue.value)) {
-            arr = modifiedValue.value.split('.') //小数还是整数
+        if (!reg.test(formValue.value)) {
+            arr = formValue.value.split('.') //小数还是整数
             if (arr.length === 1) {
                 //值为整数
-                emits(
-                    'value-change',
-                    props.opt.zmbm,
-                    `${modifiedValue.value}.${'0'.repeat(bit)}`
-                )
+                emits('value-change', props.opt.zmbm, `${formValue.value}.${'0'.repeat(bit)}`)
             } else {
                 //值为小数
                 if (arr[1].length > bit) {
@@ -62,19 +47,14 @@ const blurCallback = () => {
                     emits(
                         'value-change',
                         props.opt.zmbm,
-                        modifiedValue.value.slice(
-                            0,
-                            modifiedValue.value.length - (arr[1].length - bit)
-                        )
+                        formValue.value.slice(0, formValue.value.length - (arr[1].length - bit))
                     )
                 } else {
                     //小数位数小于固定的小数位数，补位
                     emits(
                         'value-change',
                         props.opt.zmbm,
-                        `${modifiedValue.value}${'0'.repeat(
-                            bit - arr[1].length
-                        )}`
+                        `${formValue.value}${'0'.repeat(bit - arr[1].length)}`
                     )
                 }
             }
@@ -82,14 +62,18 @@ const blurCallback = () => {
     }
 }
 
+//计算属性：组件禁用
+const isCompDisabled = computed(() =>
+    typeof props.sfzd === 'boolean' ? props.sfzd : props.opt.sfzd === '1' || props.mode !== 'edit'
+)
+//计算属性：绑定值的处理
+const formValue = computed(() => (props.value === 0 ? '0' : (props.value || '').toString().trim()))
+
 //生命周期：组件挂载
 onMounted(() => {
     //挂载时处理选项默认值
     setTimeout(() => {
-        if (
-            props.value === '' &&
-            (props.opt.ysj_mrz === 0 || props.opt.ysj_mrz)
-        ) {
+        if (props.value === '' && (props.opt.ysj_mrz === 0 || props.opt.ysj_mrz)) {
             emits('value-change', props.opt.zmbm, props.opt.ysj_mrz)
         }
     }, 0)

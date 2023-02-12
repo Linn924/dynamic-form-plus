@@ -3,7 +3,6 @@ import { resolve } from 'path'
 import vue from '@vitejs/plugin-vue'
 import defineOptions from 'unplugin-vue-define-options/dist/vite'
 
-// https://vitejs.dev/config/
 export default defineConfig({
     server: {
         hmr: true //热更新

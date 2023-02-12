@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { ref, computed, inject, onMounted, onBeforeUnmount } from 'vue'
-import type { IProvideForm } from '@/form'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 
-const form: any = inject('form')
 const props = defineProps([
     'visible',
     'opt',
@@ -20,31 +18,6 @@ const keyword = ref('') //关键词
 const checkValue: any = ref([]) //选中的值
 const checkPage = ref(false) //已选列表界面
 const checkListCopy: any = ref([]) //选中值对应得选项数组拷贝
-
-//计算属性：字典数据
-const dictList = computed(() =>
-    props.opt.optionUrl
-        ? props.dictList
-        : props.dictList.filter((dict: any) => dict.name.indexOf(keyword.value) > -1)
-)
-//计算属性：选中值对应得选项数组
-const checkList = computed(() => {
-    let arr: any = []
-    let checkValueCopy = JSON.parse(JSON.stringify(checkValue.value))
-    const checkList = [...dictList.value, ...props.checkList]
-    checkList.forEach(item => {
-        let index = checkValueCopy.indexOf(item.value)
-        if (index > -1) {
-            checkValueCopy.splice(index, 1)
-            arr.push(item)
-        }
-    })
-    return arr
-})
-//计算属性：已选列表页操作后的值数组
-const checkListValue: any = computed(() =>
-    checkListCopy.value.reduce((arr: any, item: any) => [...arr, item.value], [])
-)
 
 //事件：取消按钮点击事件
 const cancelBtnClick = () => {
@@ -80,6 +53,31 @@ const debounce = () => {
         props.getDictList(keyword.value)
     }, 200)
 }
+
+//计算属性：已选列表页操作后的值数组
+const checkListValue: any = computed(() =>
+    checkListCopy.value.reduce((arr: any, item: any) => [...arr, item.value], [])
+)
+//计算属性：字典数据
+const dictList = computed(() =>
+    props.opt.optionUrl
+        ? props.dictList
+        : props.dictList.filter((dict: any) => dict.name.indexOf(keyword.value) > -1)
+)
+//计算属性：选中值对应得选项数组
+const checkList = computed(() => {
+    let arr: any = []
+    let checkValueCopy = JSON.parse(JSON.stringify(checkValue.value))
+    const checkList = [...dictList.value, ...props.checkList]
+    checkList.forEach(item => {
+        let index = checkValueCopy.indexOf(item.value)
+        if (index > -1) {
+            checkValueCopy.splice(index, 1)
+            arr.push(item)
+        }
+    })
+    return arr
+})
 
 //生命周期：组件挂载
 onMounted(() => {

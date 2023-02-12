@@ -2,22 +2,13 @@
 import { ref, computed, inject, onMounted, onBeforeUnmount } from 'vue'
 import type { IProvideForm } from '@/form'
 
-const form: any = inject('form')
+const form = inject<IProvideForm>('form')
 const props = defineProps(['visible', 'opt', 'value', 'dictList', 'getDictList'])
 const emits = defineEmits(['update:visible', 'value-change'])
 
 //变量
 let timer: any = null //定时器
 const keyword = ref('') //关键词
-
-//计算属性：字典数据
-const dictList = computed(() =>
-    props.opt.optionUrl
-        ? props.dictList
-        : props.dictList.filter((dict: any) => dict.name.indexOf(keyword.value) > -1)
-)
-//计算属性：配置mcbm的值
-const dictName = computed(() => (props.opt.mcbm ? form.value.value[props.opt.mcbm] : ''))
 
 //事件：取消按钮点击事件
 const cancelBtnClick = () => {
@@ -44,6 +35,15 @@ const debounce = () => {
         props.getDictList(keyword.value)
     }, 200)
 }
+
+//计算属性：字典数据
+const dictList = computed(() =>
+    props.opt.optionUrl
+        ? props.dictList
+        : props.dictList.filter((dict: any) => dict.name.indexOf(keyword.value) > -1)
+)
+//计算属性：配置mcbm的值
+const dictName = computed(() => (props.opt.mcbm ? form?.value.value[props.opt.mcbm] : ''))
 
 //生命周期：组件挂载
 onMounted(() => {
