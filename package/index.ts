@@ -2,7 +2,7 @@ import { App } from 'vue'
 import config from '../package.json'
 import utils from '../utils'
 import '../theme/index.less'
-import { Anchor } from 'ant-design-vue' //按需导入 ant-design 中的组件
+import { Anchor } from 'ant-design-vue'
 import Button from './button'
 import Form from './form'
 import Input from './input'

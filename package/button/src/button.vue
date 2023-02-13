@@ -5,7 +5,7 @@ export default {
 </script>
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { IBtn, TBtns } from '@/button'
+import type { IBtn } from '@/button'
 
 const props = defineProps(['mode', 'opt', 'value', 'sfzd'])
 const emits = defineEmits(['event-emit'])
@@ -27,7 +27,7 @@ const isCompDisabled = computed(() => {
         : props.opt.sfzd === '1' || props.mode !== 'edit'
 })
 //计算属性：按钮数据
-const btns = computed<TBtns>(() => props.opt.designer_buttons || [])
+const btns = computed<IBtn[]>(() => props.opt.designer_buttons || [])
 
 //定义组件名称
 //defineOptions({

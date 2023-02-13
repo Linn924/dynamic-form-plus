@@ -1,4 +1,4 @@
-import { IFrom, TFormData, TElementPlusRules } from './types'
+import type { IFormData } from '@/form'
 import { validator, getValidateRule, date2Str, dateAdd } from './wiv'
 
 //常见文件的格式
@@ -26,7 +26,7 @@ const typeSet = {
 }
 
 //解析校验规则(转换成element校验规则)
-const parsedFormRule = (oOpt: IFrom, oRules = {}) => {
+const parsedFormRule = (oOpt: IFormData, oRules = {}) => {
     const aChangeValidateComp = [
         'select',
         'selectMultiple',
@@ -63,7 +63,7 @@ const parsedFormRule = (oOpt: IFrom, oRules = {}) => {
             ]
         }
     }
-    const aRules: TElementPlusRules = []
+    const aRules: any = []
 
     if (oOpt.ysj_bxxs === 'edittable' || oOpt.ysj_bxxs === 'editcard') return []
 
@@ -230,7 +230,7 @@ const parseOpts = (oData: any) => {
         return date2Str(oDate, sYsjgs)
     }
 
-    aFormData = aOpts.map((oOpt: IFrom, nIdx: number) => {
+    aFormData = aOpts.map((oOpt: IFormData, nIdx: number) => {
         if (mode === 'edit') {
             //rules 后续不支持修改，因此不需要考虑变更的情况。业务中如果需要修改规则，应在传入的验证方法中修改判断逻辑
             oOpt.dynamicform_rules = parsedFormRule(oOpt, rules) //解析验证规则
@@ -324,15 +324,15 @@ const parseOpts = (oData: any) => {
 
 //递归判断当前项是否显示
 const deepJudge = (
-    oOpt: IFrom | any,
-    aFormData: TFormData,
+    oOpt: IFormData | any,
+    aFormData: IFormData[],
     value: any,
     sType?: string,
     form?: any
 ): any => {
     const fJudgeStatus = (
-        oOpt: IFrom,
-        aFormData: TFormData,
+        oOpt: IFormData,
+        aFormData: IFormData[],
         value: any,
         sType?: string,
         form?: any
@@ -354,7 +354,7 @@ const deepJudge = (
 }
 
 //找到指定编码对应的配置项
-const findOpts = (oOpt: IFrom, aFormData: TFormData) => {
+const findOpts = (oOpt: IFormData, aFormData: IFormData[]) => {
     let oData = {}
     if (aFormData) {
         aFormData.some(oItem => {

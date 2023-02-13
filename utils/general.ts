@@ -1,62 +1,62 @@
-import type { TGroupData, TFormData, IExpendObj, IExpendGruoupObj } from './types'
+import type { IFormData, IGroupData, IExpendObj, IExpendGruoupObj } from '@/form'
 
 // 处理表单项配置
-const resetOpts = (aFormOpts: TFormData, opts: IExpendObj | IExpendObj[]): TFormData => {
-    const aData = Array.isArray(opts) ? opts : [opts]
-    const oMap = new Map()
-    aData.forEach(oData => {
-        oMap.set(oData.zmbm, oData)
+const resetOpts = (formdata: IFormData[], opt: IExpendObj | IExpendObj[]): IFormData[] => {
+    const optArr = Array.isArray(opt) ? opt : [opt]
+    const map = new Map()
+    optArr.forEach(opt => {
+        map.set(opt.zmbm, opt)
     })
-    return aFormOpts.map(oOpt => {
-        if (oMap.has(oOpt.zmbm)) {
-            const opts = oMap.get(oOpt.zmbm)
+    return formdata.map(form => {
+        if (map.has(form.zmbm)) {
+            const opts = map.get(form.zmbm)
             if (opts.zmbmInDt) {
-                oOpt = {
-                    ...oOpt,
-                    formdata: oOpt.formdata.map(oDtOpt => {
-                        if (oDtOpt.zmbm === opts.zmbmInDt) {
-                            oDtOpt = {
-                                ...oDtOpt,
+                form = {
+                    ...form,
+                    formdata: form.formdata.map(dtForm => {
+                        if (dtForm.zmbm === opts.zmbmInDt) {
+                            dtForm = {
+                                ...dtForm,
                                 ...opts.opt
                             }
                         }
-                        return oDtOpt
+                        return dtForm
                     })
                 }
             } else {
-                oOpt = {
-                    ...oOpt,
+                form = {
+                    ...form,
                     ...opts.opt
                 }
             }
         }
-        return oOpt
+        return form
     })
 }
 
 // 处理tab、分组配置
-const resetGroupOpts = (aGroupOpts: TGroupData, opts: IExpendGruoupObj): TGroupData => {
-    const aData = Array.isArray(opts) ? opts : [opts]
-    const oTabMap = new Map()
-    const oFzMap = new Map()
-    aData.forEach(oData => {
-        if (oData.tabbm) {
-            oTabMap.set(oData.tabbm, oData.opt)
-        } else if (oData.fzbm) {
-            oFzMap.set(oData.fzbm, oData.opt)
+const resetGroupOpts = (groupdata: IGroupData[], opt: IExpendGruoupObj): IGroupData[] => {
+    const optArr = Array.isArray(opt) ? opt : [opt]
+    const tabMap = new Map()
+    const fzMap = new Map()
+    optArr.forEach(opt => {
+        if (opt.tabbm) {
+            tabMap.set(opt.tabbm, opt.opt)
+        } else if (opt.fzbm) {
+            fzMap.set(opt.fzbm, opt.opt)
         }
     })
-    return aGroupOpts.map(oGroup => {
-        const bIsTabOpt = oTabMap.has(oGroup.tabbm)
+    return groupdata.map(group => {
+        const isTabOpt = tabMap.has(group.tabbm)
         return {
-            ...oGroup,
-            fzlist: oGroup.fzlist.map(oFz => {
+            ...group,
+            fzlist: group.fzlist.map(fz => {
                 return {
-                    ...oFz,
-                    ...(oFzMap.has(oFz.fzbm) ? oFzMap.get(oFz.fzbm) : {})
+                    ...fz,
+                    ...(fzMap.has(fz.fzbm) ? fzMap.get(fz.fzbm) : {})
                 }
             }),
-            ...(bIsTabOpt ? oTabMap.get(oGroup.tabbm) : {})
+            ...(isTabOpt ? tabMap.get(group.tabbm) : {})
         }
     })
 }

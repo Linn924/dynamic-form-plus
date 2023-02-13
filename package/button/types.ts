@@ -3,5 +3,3 @@ export interface IBtn {
     text?: string
     el?: any
 }
-
-export type TBtns = IBtn[]
