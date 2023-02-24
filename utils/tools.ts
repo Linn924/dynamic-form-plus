@@ -294,6 +294,16 @@ const parseOpts = (oData: any) => {
                 oOptValue[oOpt.zmbm] = oOpt.ysj_zdmrz || ''
         }
 
+        //mcbm初始值问腿
+        if (oOpt.ysj_zdlist && oOpt.ysj_zdmrz && oOpt.mcbm) {
+            oOpt.ysj_zdlist.some((item: any) => {
+                if (item.value === oOpt.ysj_zdmrz) {
+                    oOptValue[oOpt.mcbm as string] = item.mc || item.name
+                    return true
+                }
+            })
+        }
+
         oOpt.dynamicform_tdcols = scene === 'mobile' || !oOpt.tdcols ? 24 : Number(oOpt.tdcols) // 表单项的宽度 不传默认整行（24列；当前是移动端时，默认整行（24列）
 
         /**
